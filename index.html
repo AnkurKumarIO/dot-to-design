@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dot to Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles - Base styling for all pages */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .kolam-bg {
+            position: fixed;        /* stay in same spot even when scrolling */
+            top: 35%;
+            left: 35%;
+            width: 400px;           /* size of the motif */
+            height: 400px;
+            background: url("kolambg.png") no-repeat center/contain;
+            background-size: cover;
+            transform: translate(-50%, -50%);
+            z-index: -1;            /* behind everything */
+            animation: spin 30s linear infinite;
+            opacity: 0.07;          /* faint so text stays readable */
+            pointer-events: none;  /* don’t block clicks */
+        }
+
+        @keyframes spin {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to   { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .kolam-left{
+            position: fixed;           /* fixed to viewport */
+            top: 50%;                  /* vertically center */
+            width: 300px;              /* adjust size */
+            height: 300px;
+            background: url(kolam2.png) no-repeat center/contain;
+            opacity: 0.08;             /* faint so content readable */
+            z-index: -2;               /* behind content */
+            pointer-events: none;    /* so they don’t block clicks */
+            animation: spin 40s linear infinite;
+        }
+        .kolam-right{
+            position: fixed;           /* fixed to viewport */
+            top: 50%;                  /* vertically center */
+            width: 300px;              /* adjust size */
+            height: 300px;
+            background: url(kolam2.png) no-repeat center/contain;
+            opacity: 0.08;             /* faint so content readable */
+            z-index: -2;               /* behind content */
+            pointer-events: none;    /* so they don’t block clicks */
+            animation: spin 40s linear infinite;
+        }
+
+        .kolam-left {
+            left: -125px;              /* half hidden off-screen */
+        }
+
+        .kolam-right {
+            right: -125px;             /* half hidden off-screen */
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        body {
+            margin: 0%;
+            padding: 0%;
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #f5f1e8 0%, #ede4d3 100%);
+            color: #4a4a4a;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Kolam Background */
+        .kolam-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        .kolam-pattern {
+            position: absolute;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .kolam-pattern:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            transform: scale(0.8);
+        }
+
+        .kolam-pattern:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: -5s;
+            transform: scale(1.2);
+        }
+
+        .kolam-pattern:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            animation-delay: -10s;
+            transform: scale(0.9);
+        }
+
+        .kolam-pattern:nth-child(4) {
+            bottom: 15%;
+            right: 5%;
+            animation-delay: -15s;
+            transform: scale(1.1);
+        }
+
+        .kolam-pattern:nth-child(5) {
+            top: 50%;
+            left: 50%;
+            animation-delay: -7s;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.05;
+            }
+            25% {
+                transform: translateY(-20px) rotate(90deg);
+                opacity: 0.12;
+            }
+            50% {
+                transform: translateY(-10px) rotate(180deg);
+                opacity: 0.08;
+            }
+            75% {
+                transform: translateY(-30px) rotate(270deg);
+                opacity: 0.15;
+            }
+        }
+
+        /* Floating dots animation */
+        .floating-dots {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .floating-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #d2691e, #ff8c42);
+            border-radius: 50%;
+            animation: floatDot 15s linear infinite;
+        }
+
+        .floating-dot:nth-child(odd) {
+            background: radial-gradient(circle, #228b22, #32cd32);
+        }
+
+        @keyframes floatDot {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation - Consistent across all pages */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d2691e;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #228b22;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #228b22;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: #4a4a4a;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section - Landing Page */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="%23d2691e" opacity="0.1"/><circle cx="30" cy="20" r="1" fill="%23228b22" opacity="0.1"/><circle cx="50" cy="30" r="1" fill="%23d2691e" opacity="0.1"/><circle cx="70" cy="40" r="1" fill="%23228b22" opacity="0.1"/><circle cx="90" cy="50" r="1" fill="%23d2691e" opacity="0.1"/></svg>') repeat;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: #d2691e;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: #228b22;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            color: #5a5a5a;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #d2691e, #ff8c42);
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(210, 105, 30, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(210, 105, 30, 0.4);
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 4rem 0;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #d2691e;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        .pattern-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .pattern-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .pattern-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .pattern-svg {
+            width: 100%;
+            height: 120px;
+            margin-bottom: 1rem;
+        }
+
+        /* Play Area Styles */
+        .play-container {
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .play-controls {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pattern-selector {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .pattern-selector h3 {
+            color: #d2691e;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .pattern-option {
+            background: #f9f9f9;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .pattern-option:hover {
+            border-color: #d2691e;
+            transform: translateY(-2px);
+        }
+
+        .pattern-option.selected {
+            border-color: #228b22;
+            background: #f0fff0;
+        }
+
+        .pattern-option svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 0.5rem;
+        }
+
+        .pattern-option h4 {
+            font-size: 0.9rem;
+            color: #4a4a4a;
+            margin: 0;
+        }
+
+        .target-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .target-pattern {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .target-pattern h4 {
+            color: #d2691e;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .target-canvas {
+            border: 2px solid #228b22;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #228b22, #32cd32);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(34, 139, 34, 0.3);
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-message h3 {
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .pattern-meaning {
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: #4a4a4a;
+        }
+
+        select, button {
+            padding: 0.5rem 1rem;
+            border: 2px solid #d2691e;
+            border-radius: 8px;
+            background: white;
+            color: #4a4a4a;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            background: #d2691e;
+            color: white;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: #b8601a;
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .canvas-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            display: inline-block;
+            margin: 0 auto;
+        }
+
+        #kolamCanvas {
+            border: 2px solid #d2691e;
+            border-radius: 10px;
+            cursor: crosshair;
+        }
+
+        /* How to Play Section */
+        .how-to-play {
+            padding: 4rem 0;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .rule-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .rule-number {
+            background: #d2691e;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #4a4a4a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .play-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .control-group {
+                justify-content: space-between;
+            }
+
+            .target-display {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .target-canvas {
+                max-width: 250px;
+            }
+
+            #kolamCanvas {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .pattern-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+
+            .pattern-option svg {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero {
+                padding: 2rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .canvas-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Kolam Background -->
+    <div class="kolam-bg"></div>
+    <div class="kolam-left"></div>
+    <div class="kolam-right"></div>
+    <div class="kolam-background">
+        <!-- Large Central Kolam Pattern -->
+        <svg class="kolam-pattern" width="400" height="400" viewBox="0 0 400 400">
+            <!-- Dots Grid -->
+            <circle cx="100" cy="100" r="4" fill="#d2691e"/>
+            <circle cx="200" cy="100" r="4" fill="#d2691e"/>
+            <circle cx="300" cy="100" r="4" fill="#d2691e"/>
+            <circle cx="100" cy="200" r="4" fill="#d2691e"/>
+            <circle cx="200" cy="200" r="4" fill="#d2691e"/>
+            <circle cx="300" cy="200" r="4" fill="#d2691e"/>
+            <circle cx="100" cy="300" r="4" fill="#d2691e"/>
+            <circle cx="200" cy="300" r="4" fill="#d2691e"/>
+            <circle cx="300" cy="300" r="4" fill="#d2691e"/>
+            
+            <!-- Lotus Pattern -->
+            <path d="M200,100 Q150,150 100,200 Q150,250 200,300 Q250,250 300,200 Q250,150 200,100 Z" 
+                  fill="none" stroke="#228b22" stroke-width="3" opacity="0.6"/>
+            <path d="M100,100 L300,100 L300,300 L100,300 Z" 
+                  fill="none" stroke="#d2691e" stroke-width="2" opacity="0.4"/>
+            <circle cx="200" cy="200" r="50" fill="none" stroke="#228b22" stroke-width="2" opacity="0.5"/>
+        </svg>
+
+        <!-- Smaller Kolam Patterns -->
+        <svg class="kolam-pattern" width="200" height="200" viewBox="0 0 200 200">
+            <!-- Star Pattern -->
+            <circle cx="50" cy="50" r="3" fill="#d2691e"/>
+            <circle cx="100" cy="50" r="3" fill="#d2691e"/>
+            <circle cx="150" cy="50" r="3" fill="#d2691e"/>
+            <circle cx="50" cy="100" r="3" fill="#d2691e"/>
+            <circle cx="100" cy="100" r="3" fill="#d2691e"/>
+            <circle cx="150" cy="100" r="3" fill="#d2691e"/>
+            <circle cx="50" cy="150" r="3" fill="#d2691e"/>
+            <circle cx="100" cy="150" r="3" fill="#d2691e"/>
+            <circle cx="150" cy="150" r="3" fill="#d2691e"/>
+            
+            <path d="M100,50 L50,150 L150,100 L50,100 L150,150 Z" 
+                  fill="none" stroke="#228b22" stroke-width="2" opacity="0.6"/>
+        </svg>
+
+        <svg class="kolam-pattern" width="250" height="250" viewBox="0 0 250 250">
+            <!-- Flower Pattern -->
+            <circle cx="75" cy="75" r="3" fill="#d2691e"/>
+            <circle cx="125" cy="75" r="3" fill="#d2691e"/>
+            <circle cx="175" cy="75" r="3" fill="#d2691e"/>
+            <circle cx="75" cy="125" r="3" fill="#d2691e"/>
+            <circle cx="125" cy="125" r="3" fill="#d2691e"/>
+            <circle cx="175" cy="125" r="3" fill="#d2691e"/>
+            <circle cx="75" cy="175" r="3" fill="#d2691e"/>
+            <circle cx="125" cy="175" r="3" fill="#d2691e"/>
+            <circle cx="175" cy="175" r="3" fill="#d2691e"/>
+            
+            <path d="M125,75 Q100,100 75,125 Q100,150 125,175 Q150,150 175,125 Q150,100 125,75" 
+                  fill="none" stroke="#228b22" stroke-width="2" opacity="0.5"/>
+            <path d="M75,75 Q125,50 175,75 Q200,125 175,175 Q125,200 75,175 Q50,125 75,75" 
+                  fill="none" stroke="#d2691e" stroke-width="2" opacity="0.4"/>
+        </svg>
+
+        <svg class="kolam-pattern" width="180" height="180" viewBox="0 0 180 180">
+            <!-- Geometric Pattern -->
+            <circle cx="60" cy="60" r="3" fill="#d2691e"/>
+            <circle cx="90" cy="60" r="3" fill="#d2691e"/>
+            <circle cx="120" cy="60" r="3" fill="#d2691e"/>
+            <circle cx="60" cy="90" r="3" fill="#d2691e"/>
+            <circle cx="90" cy="90" r="3" fill="#d2691e"/>
+            <circle cx="120" cy="90" r="3" fill="#d2691e"/>
+            <circle cx="60" cy="120" r="3" fill="#d2691e"/>
+            <circle cx="90" cy="120" r="3" fill="#d2691e"/>
+            <circle cx="120" cy="120" r="3" fill="#d2691e"/>
+            
+            <path d="M60,60 L120,60 L120,120 L60,120 Z M90,60 L60,90 L90,120 L120,90 Z" 
+                  fill="none" stroke="#228b22" stroke-width="2" opacity="0.6"/>
+        </svg>
+
+        <svg class="kolam-pattern" width="300" height="300" viewBox="0 0 300 300">
+            <!-- Complex Mandala Pattern -->
+            <circle cx="150" cy="150" r="80" fill="none" stroke="#d2691e" stroke-width="2" opacity="0.3"/>
+            <circle cx="150" cy="150" r="60" fill="none" stroke="#228b22" stroke-width="2" opacity="0.4"/>
+            <circle cx="150" cy="150" r="40" fill="none" stroke="#d2691e" stroke-width="2" opacity="0.5"/>
+            <circle cx="150" cy="150" r="20" fill="none" stroke="#228b22" stroke-width="2" opacity="0.6"/>
+            
+            <!-- Radiating lines -->
+            <path d="M150,70 L150,230 M70,150 L230,150 M105,105 L195,195 M195,105 L105,195" 
+                  stroke="#d2691e" stroke-width="1" opacity="0.3"/>
+            
+            <!-- Dots around circles -->
+            <circle cx="150" cy="70" r="2" fill="#228b22" opacity="0.6"/>
+            <circle cx="230" cy="150" r="2" fill="#228b22" opacity="0.6"/>
+            <circle cx="150" cy="230" r="2" fill="#228b22" opacity="0.6"/>
+            <circle cx="70" cy="150" r="2" fill="#228b22" opacity="0.6"/>
+            <circle cx="195" cy="105" r="2" fill="#d2691e" opacity="0.6"/>
+            <circle cx="195" cy="195" r="2" fill="#d2691e" opacity="0.6"/>
+            <circle cx="105" cy="195" r="2" fill="#d2691e" opacity="0.6"/>
+            <circle cx="105" cy="105" r="2" fill="#d2691e" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <!-- Floating Dots -->
+    <div class="floating-dots">
+        <div class="floating-dot" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="floating-dot" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="floating-dot" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="floating-dot" style="left: 40%; animation-delay: 1s;"></div>
+        <div class="floating-dot" style="left: 50%; animation-delay: 3s;"></div>
+        <div class="floating-dot" style="left: 60%; animation-delay: 5s;"></div>
+        <div class="floating-dot" style="left: 70%; animation-delay: 2.5s;"></div>
+        <div class="floating-dot" style="left: 80%; animation-delay: 4.5s;"></div>
+        <div class="floating-dot" style="left: 90%; animation-delay: 1.5s;"></div>
+        <div class="floating-dot" style="left: 15%; animation-delay: 6s;"></div>
+        <div class="floating-dot" style="left: 35%; animation-delay: 7s;"></div>
+        <div class="floating-dot" style="left: 55%; animation-delay: 8s;"></div>
+        <div class="floating-dot" style="left: 75%; animation-delay: 9s;"></div>
+        <div class="floating-dot" style="left: 85%; animation-delay: 3.5s;"></div>
+        <div class="floating-dot" style="left: 25%; animation-delay: 5.5s;"></div>
+    </div>
+
+    <!-- Navigation - Same across all pages -->
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="logo">Dot to Design</a>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#play" class="nav-link">Play</a></li>
+                <li><a href="#how-to" class="nav-link">How to Play</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Landing Page Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Dot to Design</h1>
+            <p class="tagline">Gamifying Indian art for a digital generation</p>
+            <p class="intro-text">
+                Discover the ancient South Indian art of Kolam - beautiful geometric patterns drawn with rice flour. 
+                Create your own designs by connecting dots in this interactive digital experience that celebrates 
+                traditional Indian culture and creativity.
+            </p>
+            <a href="#play" class="cta-button">Start Designing</a>
+        </div>
+    </section>
+
+    <!-- About Kolam Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Kolam</h2>
+                    <p>
+                        Kolam is a traditional art form from South India, particularly Tamil Nadu, where intricate 
+                        geometric patterns are drawn on the ground using rice flour or chalk powder. These beautiful 
+                        designs are typically created at dawn in front of homes as a daily ritual, symbolizing 
+                        prosperity, protection, and welcome to visitors.
+                    </p>
+                    <p>
+                        The art of Kolam dates back over 5,000 years and represents the cosmic energy and the 
+                        cycle of creation and destruction. Each pattern starts with a grid of dots and flows 
+                        into mesmerizing designs that often incorporate mathematical concepts like symmetry, 
+                        fractals, and topology.
+                    </p>
+                    <p>
+                        Beyond its aesthetic beauty, Kolam serves as a meditation practice, bringing peace and 
+                        mindfulness to those who create it. It's also an eco-friendly art form, as the rice 
+                        flour provides food for ants and small creatures, embodying the principle of living 
+                        in harmony with nature.
+                    </p>
+                </div>
+                <div class="pattern-gallery">
+                    <div class="pattern-item">
+                        <svg class="pattern-svg" viewBox="0 0 100 100">
+                            <circle cx="20" cy="20" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="20" r="2" fill="#d2691e"/>
+                            <circle cx="80" cy="20" r="2" fill="#d2691e"/>
+                            <circle cx="20" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="80" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="20" cy="80" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="80" r="2" fill="#d2691e"/>
+                            <circle cx="80" cy="80" r="2" fill="#d2691e"/>
+                            <path d="M20,20 Q35,35 50,20 Q65,35 80,20 Q65,35 50,50 Q35,35 20,50 Q35,65 50,80 Q65,65 80,80 Q65,65 50,50 Q35,65 20,80 Q35,65 50,50 Q35,35 20,20" 
+                                  fill="none" stroke="#228b22" stroke-width="2"/>
+                        </svg>
+                        <h4>Basic Pattern</h4>
+                    </div>
+                    <div class="pattern-item">
+                        <svg class="pattern-svg" viewBox="0 0 100 100">
+                            <circle cx="25" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="25" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="25" cy="75" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="75" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="75" r="2" fill="#d2691e"/>
+                            <path d="M25,25 L75,25 L75,75 L25,75 Z M50,25 L25,50 L50,75 L75,50 Z" 
+                                  fill="none" stroke="#228b22" stroke-width="2"/>
+                        </svg>
+                        <h4>Diamond Square</h4>
+                    </div>
+                    <div class="pattern-item">
+                        <svg class="pattern-svg" viewBox="0 0 100 100">
+                            <circle cx="30" cy="20" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="20" r="2" fill="#d2691e"/>
+                            <circle cx="70" cy="20" r="2" fill="#d2691e"/>
+                            <circle cx="20" cy="40" r="2" fill="#d2691e"/>
+                            <circle cx="40" cy="40" r="2" fill="#d2691e"/>
+                            <circle cx="60" cy="40" r="2" fill="#d2691e"/>
+                            <circle cx="80" cy="40" r="2" fill="#d2691e"/>
+                            <circle cx="30" cy="60" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="60" r="2" fill="#d2691e"/>
+                            <circle cx="70" cy="60" r="2" fill="#d2691e"/>
+                            <circle cx="40" cy="80" r="2" fill="#d2691e"/>
+                            <circle cx="60" cy="80" r="2" fill="#d2691e"/>
+                            <path d="M30,20 Q20,30 20,40 Q30,30 40,40 Q30,50 30,60 Q40,50 50,60 Q60,50 70,60 Q60,50 60,40 Q70,30 80,40 Q70,30 70,20 Q60,30 50,20 Q40,30 30,20" 
+                                  fill="none" stroke="#228b22" stroke-width="2"/>
+                        </svg>
+                        <h4>Flower Pattern</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Play Area Section -->
+    <section id="play" class="play-container">
+        <div class="container">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #d2691e; margin-bottom: 2rem;">Create Your Kolam</h2>
+            
+            <!-- Pattern Selector -->
+            <div class="pattern-selector">
+                <h3>Choose a Pattern to Draw</h3>
+                <div class="pattern-grid">
+                    <div class="pattern-option" data-pattern="flower">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="25" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="25" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="25" cy="75" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="75" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="75" r="2" fill="#d2691e"/>
+                            <path d="M50,25 L25,50 L50,75 L75,50 Z M25,25 L75,25 L75,75 L25,75 Z" fill="none" stroke="#228b22" stroke-width="2"/>
+                        </svg>
+                        <h4>Lotus Flower</h4>
+                    </div>
+                    <div class="pattern-option" data-pattern="star">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="20" cy="20" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="20" r="2" fill="#d2691e"/>
+                            <circle cx="80" cy="20" r="2" fill="#d2691e"/>
+                            <circle cx="20" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="80" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="20" cy="80" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="80" r="2" fill="#d2691e"/>
+                            <circle cx="80" cy="80" r="2" fill="#d2691e"/>
+                            <path d="M50,20 L20,80 L80,50 L20,50 L80,80 Z" fill="none" stroke="#228b22" stroke-width="2"/>
+                        </svg>
+                        <h4>Star</h4>
+                    </div>
+                    <div class="pattern-option" data-pattern="diya">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="30" cy="30" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="30" r="2" fill="#d2691e"/>
+                            <circle cx="70" cy="30" r="2" fill="#d2691e"/>
+                            <circle cx="30" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="70" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="30" cy="70" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="70" r="2" fill="#d2691e"/>
+                            <circle cx="70" cy="70" r="2" fill="#d2691e"/>
+                            <path d="M30,30 Q50,20 70,30 L70,50 Q50,60 30,50 Z M50,30 L50,70" fill="none" stroke="#228b22" stroke-width="2"/>
+                        </svg>
+                        <h4>Diya (Lamp)</h4>
+                    </div>
+                    <div class="pattern-option" data-pattern="conch">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="25" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="25" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="25" cy="75" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="75" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="75" r="2" fill="#d2691e"/>
+                            <path d="M25,25 Q50,15 75,25 Q85,50 75,75 Q50,85 25,75 Q15,50 25,25 M50,25 L50,75" fill="none" stroke="#228b22" stroke-width="2"/>
+                        </svg>
+                        <h4>Conch Shell</h4>
+                    </div>
+                    <div class="pattern-option selected" data-pattern="free">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="25" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="25" r="2" fill="#d2691e"/>
+                            <circle cx="25" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="50" r="2" fill="#d2691e"/>
+                            <circle cx="25" cy="75" r="2" fill="#d2691e"/>
+                            <circle cx="50" cy="75" r="2" fill="#d2691e"/>
+                            <circle cx="75" cy="75" r="2" fill="#d2691e"/>
+                            <text x="50" y="55" text-anchor="middle" fill="#228b22" font-size="20">✨</text>
+                        </svg>
+                        <h4>Free Draw</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="success-message">
+                <h3>🎉 Congratulations! You drew it correctly!</h3>
+                <p id="patternMeaning"></p>
+                <div class="pattern-meaning" id="patternSignificance"></div>
+            </div>
+            
+            <!-- Game Controls -->
+            <div class="play-controls">
+                <div class="control-group">
+                    <label for="gridSize">Grid Size:</label>
+                    <select id="gridSize">
+                        <option value="4">4×4</option>
+                        <option value="6" selected>6×6</option>
+                        <option value="8">8×8</option>
+                        <option value="10">10×10</option>
+                    </select>
+                </div>
+                <button id="undoBtn">Undo</button>
+                <button id="clearBtn">Clear All</button>
+                <button id="submitBtn">Submit Pattern</button>
+            </div>
+
+            <!-- Drawing Area -->
+            <div class="target-display">
+                <div class="target-pattern" id="targetPattern" style="display: none;">
+                    <h4>Target Pattern</h4>
+                    <canvas id="targetCanvas" class="target-canvas" width="300" height="300"></canvas>
+                    <p id="patternDescription" style="margin-top: 1rem; color: #666; font-style: italic;"></p>
+                </div>
+                
+                <div class="canvas-container">
+                    <h4 style="color: #d2691e; margin-bottom: 1rem;">Your Drawing</h4>
+                    <canvas id="kolamCanvas" width="500" height="500"></canvas>
+                </div>
+            </div>
+            
+            <p style="margin-top: 1rem; color: #666; font-style: italic;">
+                Click and drag between dots to create lines. Build beautiful patterns by connecting the dots!
+            </p>
+        </div>
+    </section>
+
+    <!-- How to Play Section -->
+    <section id="how-to" class="how-to-play">
+        <div class="container">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #d2691e; margin-bottom: 2rem; text-align: center;">How to Play</h2>
+            
+            <div class="rules-grid">
+                <div class="rule-item">
+                    <div class="rule-number">1</div>
+                    <h3>Choose Grid Size</h3>
+                    <p>Select your preferred grid size from 4×4 to 10×10. Beginners should start with smaller grids.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-number">2</div>
+                    <h3>Connect the Dots</h3>
+                    <p>Click and drag from one dot to another to create lines. The line will appear as you draw.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-number">3</div>
+                    <h3>Create Patterns</h3>
+                    <p>Traditional Kolam patterns are continuous and symmetrical. Try to create closed loops and geometric shapes.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-number">4</div>
+                    <h3>Submit & Learn</h3>
+                    <p>Use "Submit Pattern" to discover the symbolic meaning of what you've drawn. The system will analyze your creation!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Dot to Design. Celebrating the beauty of traditional Indian art.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Created with love for cultural preservation and digital creativity.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality - handles smooth scrolling and active states
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+
+            // Smooth scrolling for navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Update active navigation link based on scroll position
+            window.addEventListener('scroll', function() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    if (scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Initialize the Kolam drawing canvas
+            initializeKolamCanvas();
+        });
+
+        // Kolam Canvas Drawing Functionality
+        function initializeKolamCanvas() {
+            const canvas = document.getElementById('kolamCanvas');
+            const ctx = canvas.getContext('2d');
+            const targetCanvas = document.getElementById('targetCanvas');
+            const targetCtx = targetCanvas.getContext('2d');
+            const gridSizeSelect = document.getElementById('gridSize');
+            const undoBtn = document.getElementById('undoBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const patternOptions = document.querySelectorAll('.pattern-option');
+            const targetPattern = document.getElementById('targetPattern');
+            const successMessage = document.getElementById('successMessage');
+            const patternMeaning = document.getElementById('patternMeaning');
+            const patternSignificance = document.getElementById('patternSignificance');
+            const patternDescription = document.getElementById('patternDescription');
+
+            // Drawing state variables
+            let gridSize = 6;
+            let dots = [];
+            let lines = [];
+            let isDrawing = false;
+            let startDot = null;
+            let currentLine = null;
+            let currentPattern = 'free';
+            let targetLines = [];
+
+            // Pattern definitions with meanings
+            const patterns = {
+                flower: {
+                    name: 'Lotus Flower',
+                    meaning: 'This beautiful lotus pattern represents purity, enlightenment, and spiritual growth.',
+                    significance: 'In Hindu tradition, the lotus symbolizes divine beauty and purity. Drawing this pattern brings blessings of wisdom and inner peace to your home.',
+                    description: 'Connect the dots to form a lotus flower - a diamond shape with a square around it.',
+                    lines: [
+                        {start: {row: 1, col: 1}, end: {row: 0, col: 1}}, // center to top
+                        {start: {row: 1, col: 1}, end: {row: 1, col: 0}}, // center to left
+                        {start: {row: 1, col: 1}, end: {row: 2, col: 1}}, // center to bottom
+                        {start: {row: 1, col: 1}, end: {row: 1, col: 2}}, // center to right
+                        {start: {row: 0, col: 0}, end: {row: 0, col: 2}}, // top line
+                        {start: {row: 0, col: 2}, end: {row: 2, col: 2}}, // right line
+                        {start: {row: 2, col: 2}, end: {row: 2, col: 0}}, // bottom line
+                        {start: {row: 2, col: 0}, end: {row: 0, col: 0}}  // left line
+                    ]
+                },
+                star: {
+                    name: 'Star',
+                    meaning: 'This star pattern represents guidance, hope, and divine protection.',
+                    significance: 'Stars have guided travelers for centuries. This pattern invites celestial blessings and protection from above into your home.',
+                    description: 'Create a five-pointed star by connecting the dots in a star formation.',
+                    lines: [
+                        {start: {row: 0, col: 1}, end: {row: 2, col: 0}}, // top to bottom-left
+                        {start: {row: 2, col: 0}, end: {row: 1, col: 2}}, // bottom-left to right
+                        {start: {row: 1, col: 2}, end: {row: 1, col: 0}}, // right to left
+                        {start: {row: 1, col: 0}, end: {row: 2, col: 2}}, // left to bottom-right
+                        {start: {row: 2, col: 2}, end: {row: 0, col: 1}}  // bottom-right to top
+                    ]
+                },
+                diya: {
+                    name: 'Diya (Oil Lamp)',
+                    meaning: 'This diya pattern represents the triumph of light over darkness and knowledge over ignorance.',
+                    significance: 'The diya is lit during festivals like Diwali to welcome prosperity and ward off negative energy. This pattern brings light and positivity to your space.',
+                    description: 'Draw a traditional oil lamp shape with a flame on top.',
+                    lines: [
+                        {start: {row: 0, col: 0}, end: {row: 0, col: 2}}, // top curve
+                        {start: {row: 0, col: 2}, end: {row: 1, col: 2}}, // right side
+                        {start: {row: 1, col: 2}, end: {row: 2, col: 1}}, // bottom right
+                        {start: {row: 2, col: 1}, end: {row: 1, col: 0}}, // bottom left
+                        {start: {row: 1, col: 0}, end: {row: 0, col: 0}}, // left side
+                        {start: {row: 0, col: 1}, end: {row: 2, col: 1}}  // flame
+                    ]
+                },
+                conch: {
+                    name: 'Conch Shell (Shankh)',
+                    meaning: 'This conch shell pattern represents the sacred sound of Om and divine calling.',
+                    significance: 'The conch shell is blown in temples and ceremonies to purify the environment and call upon divine blessings. This pattern brings spiritual harmony and peace.',
+                    description: 'Create a spiral conch shell shape with a central line.',
+                    lines: [
+                        {start: {row: 0, col: 0}, end: {row: 0, col: 2}}, // top
+                        {start: {row: 0, col: 2}, end: {row: 2, col: 2}}, // right
+                        {start: {row: 2, col: 2}, end: {row: 2, col: 0}}, // bottom
+                        {start: {row: 2, col: 0}, end: {row: 0, col: 0}}, // left
+                        {start: {row: 0, col: 1}, end: {row: 2, col: 1}}  // center line
+                    ]
+                }
+            };
+
+            // Pattern selection handlers
+            patternOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    patternOptions.forEach(opt => opt.classList.remove('selected'));
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    currentPattern = this.dataset.pattern;
+                    
+                    if (currentPattern === 'free') {
+                        targetPattern.style.display = 'none';
+                        successMessage.classList.remove('show');
+                    } else {
+                        targetPattern.style.display = 'block';
+                        drawTargetPattern();
+                        patternDescription.textContent = patterns[currentPattern].description;
+                        successMessage.classList.remove('show');
+                    }
+                    
+                    // Clear current drawing
+                    lines = [];
+                    drawCanvas();
+                    updateUndoButton();
+                });
+            });
+
+            // Draw target pattern on target canvas
+            function drawTargetPattern() {
+                if (currentPattern === 'free') return;
+                
+                const pattern = patterns[currentPattern];
+                targetLines = pattern.lines;
+                
+                // Clear target canvas
+                targetCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+                
+                // Calculate positions for 3x3 grid on target canvas
+                const padding = 50;
+                const spacing = (targetCanvas.width - 2 * padding) / 2; // 3x3 grid
+                
+                // Draw dots
+                for (let row = 0; row < 3; row++) {
+                    for (let col = 0; col < 3; col++) {
+                        const x = padding + col * spacing;
+                        const y = padding + row * spacing;
+                        drawDotOnCanvas(targetCtx, x, y, '#d2691e', 4);
+                    }
+                }
+                
+                // Draw pattern lines
+                pattern.lines.forEach(line => {
+                    const startX = padding + line.start.col * spacing;
+                    const startY = padding + line.start.row * spacing;
+                    const endX = padding + line.end.col * spacing;
+                    const endY = padding + line.end.row * spacing;
+                    
+                    drawLineOnCanvas(targetCtx, {x: startX, y: startY}, {x: endX, y: endY}, '#228b22', 2);
+                });
+            }
+
+            // Check if user's drawing matches the target pattern
+            function checkPatternMatch() {
+                if (currentPattern === 'free' || !patterns[currentPattern]) return;
+                
+                const pattern = patterns[currentPattern];
+                const requiredLines = pattern.lines;
+                
+                // Convert user lines to grid coordinates
+                const userGridLines = lines.map(line => {
+                    const startRow = Math.round((line.start.y - 50) / ((canvas.height - 100) / (gridSize - 1)));
+                    const startCol = Math.round((line.start.x - 50) / ((canvas.width - 100) / (gridSize - 1)));
+                    const endRow = Math.round((line.end.y - 50) / ((canvas.height - 100) / (gridSize - 1)));
+                    const endCol = Math.round((line.end.x - 50) / ((canvas.width - 100) / (gridSize - 1)));
+                    
+                    return {
+                        start: {row: startRow, col: startCol},
+                        end: {row: endRow, col: endCol}
+                    };
+                });
+                
+                // Check if all required lines are present
+                const allLinesMatch = requiredLines.every(reqLine => {
+                    return userGridLines.some(userLine => {
+                        return (
+                            (userLine.start.row === reqLine.start.row && userLine.start.col === reqLine.start.col &&
+                             userLine.end.row === reqLine.end.row && userLine.end.col === reqLine.end.col) ||
+                            (userLine.start.row === reqLine.end.row && userLine.start.col === reqLine.end.col &&
+                             userLine.end.row === reqLine.start.row && userLine.end.col === reqLine.start.col)
+                        );
+                    });
+                });
+                
+                if (allLinesMatch && userGridLines.length === requiredLines.length) {
+                    showSuccessMessage();
+                }
+            }
+
+            // Show success message with pattern meaning
+            function showSuccessMessage() {
+                const pattern = patterns[currentPattern];
+                patternMeaning.textContent = pattern.meaning;
+                patternSignificance.textContent = pattern.significance;
+                successMessage.classList.add('show');
+                
+                // Hide success message after 8 seconds
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 8000);
+            }
+
+            // Analyze user's drawing and match with known patterns
+            function analyzeAndMatchPattern() {
+                if (lines.length === 0) {
+                    showPatternResult('empty', 'Please draw something first!', 'Connect some dots to create a pattern, then submit to see what you\'ve drawn.');
+                    return;
+                }
+
+                // If in free draw mode, analyze for any pattern
+                if (currentPattern === 'free') {
+                    // Convert user lines to a normalized format for pattern matching
+                    const userPattern = normalizeUserPattern();
+                    
+                    // Try to match against known patterns
+                    const matchedPattern = findBestPatternMatch(userPattern);
+                    
+                    if (matchedPattern) {
+                        const pattern = patterns[matchedPattern.type];
+                        showPatternResult('success', 
+                            `🎉 You drew a ${pattern.name}!`, 
+                            pattern.meaning + ' ' + pattern.significance,
+                            matchedPattern.accuracy
+                        );
+                    } else {
+                        // Check for basic geometric shapes
+                        const geometricShape = detectGeometricShape(userPattern);
+                        if (geometricShape) {
+                            showPatternResult('geometric', 
+                                `You created a ${geometricShape.name}!`, 
+                                geometricShape.meaning
+                            );
+                        } else {
+                            showPatternResult('creative', 
+                                'Beautiful Creative Pattern!', 
+                                'You\'ve created a unique design! In Kolam tradition, personal creativity and individual expression are highly valued. Your pattern represents your own spiritual journey and artistic vision.'
+                            );
+                        }
+                    }
+                } else {
+                    // For specific pattern modes, check if they drew the correct pattern
+                    const pattern = patterns[currentPattern];
+                    const userPattern = normalizeUserPattern();
+                    const accuracy = calculatePatternSimilarity(userPattern, pattern.lines);
+                    
+                    if (accuracy > 0.7) {
+                        showPatternResult('success', 
+                            `🎉 Perfect! You drew the ${pattern.name}! (${Math.round(accuracy * 100)}% match)`, 
+                            pattern.meaning + ' ' + pattern.significance,
+                            Math.round(accuracy * 100)
+                        );
+                    } else if (accuracy > 0.4) {
+                        showPatternResult('partial', 
+                            `Good attempt at the ${pattern.name}! (${Math.round(accuracy * 100)}% match)`, 
+                            `You're on the right track! ${pattern.meaning} Try connecting the dots as shown in the target pattern for a perfect match.`
+                        );
+                    } else {
+                        // Check if they drew something else recognizable
+                        const matchedPattern = findBestPatternMatch(userPattern);
+                        if (matchedPattern && matchedPattern.type !== currentPattern) {
+                            const otherPattern = patterns[matchedPattern.type];
+                            showPatternResult('different', 
+                                `You drew a ${otherPattern.name} instead!`, 
+                                `${otherPattern.meaning} This is beautiful, but try drawing the ${pattern.name} as shown in the target pattern.`
+                            );
+                        } else {
+                            const geometricShape = detectGeometricShape(userPattern);
+                            if (geometricShape) {
+                                showPatternResult('geometric', 
+                                    `You created a ${geometricShape.name}!`, 
+                                    `${geometricShape.meaning} Now try drawing the ${pattern.name} as shown in the target pattern.`
+                                );
+                            } else {
+                                showPatternResult('encourage', 
+                                    `Keep trying the ${pattern.name}!`, 
+                                    `${pattern.meaning} Look at the target pattern and try to connect the dots in the same way. Each line in the pattern has special significance.`
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Normalize user pattern for comparison
+            function normalizeUserPattern() {
+                return lines.map(line => {
+                    // Convert to grid coordinates
+                    const startRow = Math.round((line.start.y - 50) / ((canvas.height - 100) / (gridSize - 1)));
+                    const startCol = Math.round((line.start.x - 50) / ((canvas.width - 100) / (gridSize - 1)));
+                    const endRow = Math.round((line.end.y - 50) / ((canvas.height - 100) / (gridSize - 1)));
+                    const endCol = Math.round((line.end.x - 50) / ((canvas.width - 100) / (gridSize - 1)));
+                    
+                    // Normalize to ensure consistent direction
+                    if (startRow > endRow || (startRow === endRow && startCol > endCol)) {
+                        return {
+                            start: {row: endRow, col: endCol},
+                            end: {row: startRow, col: startCol}
+                        };
+                    }
+                    return {
+                        start: {row: startRow, col: startCol},
+                        end: {row: endRow, col: endCol}
+                    };
+                }).sort((a, b) => {
+                    if (a.start.row !== b.start.row) return a.start.row - b.start.row;
+                    if (a.start.col !== b.start.col) return a.start.col - b.start.col;
+                    if (a.end.row !== b.end.row) return a.end.row - b.end.row;
+                    return a.end.col - b.end.col;
+                });
+            }
+
+            // Find the best matching pattern
+            function findBestPatternMatch(userPattern) {
+                let bestMatch = null;
+                let bestScore = 0;
+
+                Object.keys(patterns).forEach(patternKey => {
+                    const pattern = patterns[patternKey];
+                    const score = calculatePatternSimilarity(userPattern, pattern.lines);
+                    
+                    if (score > bestScore && score > 0.7) { // 70% similarity threshold
+                        bestScore = score;
+                        bestMatch = {
+                            type: patternKey,
+                            accuracy: Math.round(score * 100)
+                        };
+                    }
+                });
+
+                return bestMatch;
+            }
+
+            // Calculate similarity between user pattern and reference pattern
+            function calculatePatternSimilarity(userPattern, referenceLines) {
+                if (userPattern.length === 0 || referenceLines.length === 0) return 0;
+                
+                // Normalize reference lines
+                const normalizedRef = referenceLines.map(line => {
+                    if (line.start.row > line.end.row || (line.start.row === line.end.row && line.start.col > line.end.col)) {
+                        return {
+                            start: {row: line.end.row, col: line.end.col},
+                            end: {row: line.start.row, col: line.start.col}
+                        };
+                    }
+                    return line;
+                }).sort((a, b) => {
+                    if (a.start.row !== b.start.row) return a.start.row - b.start.row;
+                    if (a.start.col !== b.start.col) return a.start.col - b.start.col;
+                    if (a.end.row !== b.end.row) return a.end.row - b.end.row;
+                    return a.end.col - b.end.col;
+                });
+
+                let matches = 0;
+                const maxLines = Math.max(userPattern.length, normalizedRef.length);
+                
+                normalizedRef.forEach(refLine => {
+                    const hasMatch = userPattern.some(userLine => 
+                        userLine.start.row === refLine.start.row &&
+                        userLine.start.col === refLine.start.col &&
+                        userLine.end.row === refLine.end.row &&
+                        userLine.end.col === refLine.end.col
+                    );
+                    if (hasMatch) matches++;
+                });
+
+                // Penalize for extra lines
+                const extraLines = Math.abs(userPattern.length - normalizedRef.length);
+                const penalty = extraLines * 0.1;
+                
+                return Math.max(0, (matches / normalizedRef.length) - penalty);
+            }
+
+            // Detect basic geometric shapes
+            function detectGeometricShape(userPattern) {
+                const shapes = {
+                    square: {
+                        name: 'Square',
+                        meaning: 'The square represents stability, balance, and the four directions. In Kolam tradition, it symbolizes the foundation of life and the material world.'
+                    },
+                    triangle: {
+                        name: 'Triangle',
+                        meaning: 'The triangle represents the three fundamental forces of creation, preservation, and destruction. It symbolizes harmony and divine energy.'
+                    },
+                    circle: {
+                        name: 'Circle',
+                        meaning: 'The circle represents infinity, wholeness, and the cycle of life. It symbolizes unity and the eternal nature of the soul.'
+                    },
+                    cross: {
+                        name: 'Cross',
+                        meaning: 'The cross represents the meeting of earthly and divine realms. It symbolizes protection and the four cardinal directions.'
+                    }
+                };
+
+                // Simple shape detection based on line patterns
+                if (userPattern.length === 4) {
+                    // Check for square pattern
+                    const hasHorizontalLines = userPattern.some(line => line.start.row === line.end.row);
+                    const hasVerticalLines = userPattern.some(line => line.start.col === line.end.col);
+                    if (hasHorizontalLines && hasVerticalLines) {
+                        return shapes.square;
+                    }
+                }
+                
+                if (userPattern.length === 3) {
+                    return shapes.triangle;
+                }
+                
+                if (userPattern.length === 2) {
+                    // Check for cross pattern
+                    const line1 = userPattern[0];
+                    const line2 = userPattern[1];
+                    if ((line1.start.row === line1.end.row && line2.start.col === line2.end.col) ||
+                        (line1.start.col === line1.end.col && line2.start.row === line2.end.row)) {
+                        return shapes.cross;
+                    }
+                }
+
+                return null;
+            }
+
+            // Show pattern recognition result
+            function showPatternResult(type, title, meaning, accuracy = null) {
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'pattern-result';
+                resultDiv.style.cssText = `
+                    background: linear-gradient(135deg, #228b22, #32cd32);
+                    color: white;
+                    padding: 1.5rem;
+                    border-radius: 15px;
+                    margin: 1rem 0;
+                    box-shadow: 0 4px 15px rgba(34, 139, 34, 0.3);
+                    animation: slideIn 0.5s ease-out;
+                    position: relative;
+                `;
+                
+                let content = `<h3 style="margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">${title}</h3>`;
+                if (accuracy) {
+                    content += `<p style="margin: 0.5rem 0; font-weight: bold;">Pattern Match: ${accuracy}%</p>`;
+                }
+                content += `<p style="margin: 0; font-style: italic;">${meaning}</p>`;
+                
+                // Add close button
+                content += `<button onclick="this.parentElement.remove()" style="
+                    position: absolute;
+                    top: 10px;
+                    right: 15px;
+                    background: rgba(255,255,255,0.2);
+                    border: none;
+                    color: white;
+                    border-radius: 50%;
+                    width: 25px;
+                    height: 25px;
+                    cursor: pointer;
+                    font-size: 16px;
+                ">×</button>`;
+                
+                resultDiv.innerHTML = content;
+                
+                // Remove any existing result
+                const existingResult = document.querySelector('.pattern-result');
+                if (existingResult) {
+                    existingResult.remove();
+                }
+                
+                // Insert after the controls
+                const controls = document.querySelector('.play-controls');
+                controls.parentNode.insertBefore(resultDiv, controls.nextSibling);
+                
+                // Auto-remove after 10 seconds
+                setTimeout(() => {
+                    if (resultDiv.parentNode) {
+                        resultDiv.remove();
+                    }
+                }, 10000);
+            }
+
+            // Initialize the canvas
+            function initCanvas() {
+                gridSize = parseInt(gridSizeSelect.value);
+                dots = [];
+                lines = [];
+                
+                // For patterns, force 3x3 grid
+                if (currentPattern !== 'free') {
+                    gridSize = 3;
+                    gridSizeSelect.value = '4'; // Closest option
+                }
+                
+                // Calculate dot positions based on grid size
+                const padding = 50;
+                const spacing = (canvas.width - 2 * padding) / (gridSize - 1);
+                
+                for (let row = 0; row < gridSize; row++) {
+                    for (let col = 0; col < gridSize; col++) {
+                        dots.push({
+                            x: padding + col * spacing,
+                            y: padding + row * spacing,
+                            id: row * gridSize + col,
+                            row: row,
+                            col: col
+                        });
+                    }
+                }
+                
+                drawCanvas();
+                updateUndoButton();
+                
+                // Redraw target pattern if needed
+                if (currentPattern !== 'free') {
+                    drawTargetPattern();
+                }
+            }
+
+            // Draw the entire canvas (dots and lines)
+            function drawCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw all completed lines
+                lines.forEach(line => {
+                    drawLine(line.start, line.end, '#228b22', 3);
+                });
+                
+                // Draw current line being drawn
+                if (currentLine) {
+                    drawLine(currentLine.start, currentLine.end, '#228b22', 2);
+                }
+                
+                // Draw all dots
+                dots.forEach(dot => {
+                    drawDot(dot.x, dot.y, '#d2691e', 6);
+                });
+            }
+
+            // Draw a single dot
+            function drawDot(x, y, color, radius) {
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            // Draw a single dot on any canvas
+            function drawDotOnCanvas(context, x, y, color, radius) {
+                context.beginPath();
+                context.arc(x, y, radius, 0, 2 * Math.PI);
+                context.fillStyle = color;
+                context.fill();
+                context.strokeStyle = '#fff';
+                context.lineWidth = 2;
+                context.stroke();
+            }
+
+            // Draw a line between two points
+            function drawLine(start, end, color, width) {
+                ctx.beginPath();
+                ctx.moveTo(start.x, start.y);
+                ctx.lineTo(end.x, end.y);
+                ctx.strokeStyle = color;
+                ctx.lineWidth = width;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+            }
+
+            // Draw a line on any canvas
+            function drawLineOnCanvas(context, start, end, color, width) {
+                context.beginPath();
+                context.moveTo(start.x, start.y);
+                context.lineTo(end.x, end.y);
+                context.strokeStyle = color;
+                context.lineWidth = width;
+                context.lineCap = 'round';
+                context.stroke();
+            }
+
+            // Find the nearest dot to given coordinates
+            function findNearestDot(x, y) {
+                let nearestDot = null;
+                let minDistance = 30; // Maximum distance to consider a "hit"
+                
+                dots.forEach(dot => {
+                    const distance = Math.sqrt((x - dot.x) ** 2 + (y - dot.y) ** 2);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        nearestDot = dot;
+                    }
+                });
+                
+                return nearestDot;
+            }
+
+            // Get mouse position relative to canvas
+            function getMousePos(e) {
+                const rect = canvas.getBoundingClientRect();
+                return {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+            }
+
+            // Get touch position relative to canvas
+            function getTouchPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                return {
+                    x: e.touches[0].clientX - rect.left,
+                    y: e.touches[0].clientY - rect.top
+                };
+            }
+
+            // Mouse event handlers
+            canvas.addEventListener('mousedown', function(e) {
+                const pos = getMousePos(e);
+                const dot = findNearestDot(pos.x, pos.y);
+                
+                if (dot) {
+                    isDrawing = true;
+                    startDot = dot;
+                    currentLine = { start: dot, end: dot };
+                    canvas.style.cursor = 'grabbing';
+                }
+            });
+
+            canvas.addEventListener('mousemove', function(e) {
+                if (isDrawing && startDot) {
+                    const pos = getMousePos(e);
+                    currentLine.end = pos;
+                    drawCanvas();
+                } else {
+                    // Change cursor when hovering over dots
+                    const pos = getMousePos(e);
+                    const dot = findNearestDot(pos.x, pos.y);
+                    canvas.style.cursor = dot ? 'pointer' : 'crosshair';
+                }
+            });
+
+            canvas.addEventListener('mouseup', function(e) {
+                if (isDrawing && startDot) {
+                    const pos = getMousePos(e);
+                    const endDot = findNearestDot(pos.x, pos.y);
+                    
+                    if (endDot && endDot.id !== startDot.id) {
+                        // Check if this line already exists
+                        const lineExists = lines.some(line => 
+                            (line.start.id === startDot.id && line.end.id === endDot.id) ||
+                            (line.start.id === endDot.id && line.end.id === startDot.id)
+                        );
+                        
+                        if (!lineExists) {
+                            lines.push({ start: startDot, end: endDot });
+                            checkPatternMatch(); // Check if pattern is complete
+                        }
+                    }
+                    
+                    isDrawing = false;
+                    startDot = null;
+                    currentLine = null;
+                    canvas.style.cursor = 'crosshair';
+                    drawCanvas();
+                    updateUndoButton();
+                }
+            });
+
+            // Touch event handlers for mobile support
+            canvas.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                const pos = getTouchPos(e);
+                const dot = findNearestDot(pos.x, pos.y);
+                
+                if (dot) {
+                    isDrawing = true;
+                    startDot = dot;
+                    currentLine = { start: dot, end: dot };
+                }
+            });
+
+            canvas.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                if (isDrawing && startDot) {
+                    const pos = getTouchPos(e);
+                    currentLine.end = pos;
+                    drawCanvas();
+                }
+            });
+
+            canvas.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                if (isDrawing && startDot) {
+                    const pos = getTouchPos(e.changedTouches[0]);
+                    const endDot = findNearestDot(pos.x, pos.y);
+                    
+                    if (endDot && endDot.id !== startDot.id) {
+                        const lineExists = lines.some(line => 
+                            (line.start.id === startDot.id && line.end.id === endDot.id) ||
+                            (line.start.id === endDot.id && line.end.id === startDot.id)
+                        );
+                        
+                        if (!lineExists) {
+                            lines.push({ start: startDot, end: endDot });
+                            checkPatternMatch(); // Check if pattern is complete
+                        }
+                    }
+                    
+                    isDrawing = false;
+                    startDot = null;
+                    currentLine = null;
+                    drawCanvas();
+                    updateUndoButton();
+                }
+            });
+
+            // Control button handlers
+            gridSizeSelect.addEventListener('change', initCanvas);
+
+            undoBtn.addEventListener('click', function() {
+                if (lines.length > 0) {
+                    lines.pop();
+                    drawCanvas();
+                    updateUndoButton();
+                    successMessage.classList.remove('show'); // Hide success message
+                }
+            });
+
+            clearBtn.addEventListener('click', function() {
+                lines = [];
+                drawCanvas();
+                updateUndoButton();
+                successMessage.classList.remove('show'); // Hide success message
+            });
+
+            submitBtn.addEventListener('click', function() {
+                analyzeAndMatchPattern();
+            });
+
+            // Update undo button state
+            function updateUndoButton() {
+                undoBtn.disabled = lines.length === 0;
+            }
+
+            // Initialize the canvas
+            initCanvas();
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98289bde702b26a7',t:'MTc1ODQ0NzcwOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
