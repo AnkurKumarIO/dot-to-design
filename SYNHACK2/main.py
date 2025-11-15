@@ -12,7 +12,7 @@ app = Flask(__name__)
 # Configure CORS to allow frontend requests
 CORS(app, resources={
     r"/api/*": {
-        "origins": ["http://localhost:3000", "http://127.0.0.1:3000", "*"],
+        "origins": "*",
         "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"],
         "expose_headers": ["Content-Type", "Authorization"],
@@ -21,13 +21,15 @@ CORS(app, resources={
 })
 
 # Import routes
-from app.routes import auth, complaints, admin, worker
-
-# Register blueprints
-app.register_blueprint(auth.bp)
-app.register_blueprint(complaints.bp)
-app.register_blueprint(admin.bp)
-app.register_blueprint(worker.bp)
+try:
+    from app.routes import auth, complaints, admin, worker
+    # Register blueprints
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(complaints.bp)
+    app.register_blueprint(admin.bp)
+    app.register_blueprint(worker.bp)
+except Exception as e:
+    print(f"Error importing routes: {e}")
 
 @app.route('/')
 def home():
